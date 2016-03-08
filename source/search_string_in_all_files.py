@@ -1,37 +1,91 @@
 import os
 import json
-import combine_data_json
 import shutil
+import requests
+def save_file_from_url(url, file_path):
+     """
+   Downloads a file using the given url to a specific location(file_path).
+   If the file_path is invalid then a temp_file 
+        is created and its path is returned.
+   """
 
-def get_results(folder_loc):
-    keys = ['repolist']
-    if os.path.exists(folder_loc):
+     if os.path.exists(file_path.replace(os.path.basename(file_path), '')):
+         with open(file_path, 'wb') as file_writer:
+             r = requests.get(url, stream=True)
+             for block in r.iter_content(1024, decode_unicode=False):
+                 file_writer.write(block)
+         return file_path
+     else:             
+         print "invalid file location"
+
+def get_all_files_in_directory(directory):
+    if os.path.exists(directory):
         all_files = []
-        result_files = []
-        for path, subdirs, files in os.walk(folder_loc):
+        for path, subdirs, files in os.walk(directory):
             for sub_url in files:
-                if 'scancode-scan' not in path and 'scancode-scan' not in sub_url:
-                    all_files.append(os.path.join(path, sub_url))
-        for file in all_files:
-            with open(file, 'rb') as file_reader:
-                lines = ''
-                for line in file_reader:
-                    lines = lines + line
-                for key in keys:
+                all_files.append(os.path.join(path, sub_url))
+        return all_files
+    else:
+        print 'folder not found'
+
+lic_keys = ['(c)','copyright','license','distribute','distribution','proprietary']
+# lic_keys = ['commons-pool2']
+def search_str_in_all_files(folder_loc):
+    import re
+    result_files = []
+    for file in get_all_files_in_directory(folder_loc):
+        with open(file, 'rb') as file_reader:
+            lines = ''
+            for line in file_reader:
+                lines = lines + line
+            for key in lic_keys:
+                try:
+#                     lines = lines.replace('\n', '')
+#                     if len(re.findall(r'copyright.{2,100}imperva', lines.lower()))>0 or len(re.findall(r'\(c\).{2,100}imperva', lines.lower()))>0:
+#                         result_files.append(file)
+#                         break
                     if lines.lower().find(key) >= 0:
                         result_files.append(file)
                         break
-        print "all files : " + str(len(all_files))
-        fin_output = []
-        for value in result_files:
-            try:
-                value = value.replace('/','\\')
-                fin_output.append(value)
-            except:
-                pass
-        return fin_output
-    else:
-        print 'folder not found'
+                except:
+                    pass
+                
+    fin_output = []
+    for value in result_files:
+        try:
+            value = value.replace('/','\\')
+            fin_output.append(value)
+        except:
+            pass
+    return fin_output
+search_patterns = [r'.{0,150}xmlparserapis-2.6.2.jar']
+def search_pattern_in_all_files(folder_loc):
+    import re
+    result_files = []
+    for file in get_all_files_in_directory(folder_loc):
+        with open(file, 'rb') as file_reader:
+            lines = ''
+            for line in file_reader:
+                lines = lines + line
+            for key in search_patterns:
+                try:
+                    lines = lines.replace('\n', '')
+                    if len(re.findall(key, lines.lower()))>0:
+                        for value in re.findall(key, lines.lower()):
+                            print value
+                        result_files.append(file)
+                        break
+                except:
+                    pass
+                
+    fin_output = []
+    for value in result_files:
+        try:
+            value = value.replace('/','\\')
+            fin_output.append(value)
+        except:
+            pass
+    return fin_output
 
 
 def get_json_data(location):
@@ -64,35 +118,26 @@ def get_abs_paths(paths):
 
 def copy_filesto_directory(locations, directory):
     for location in locations:
-        shutil.copy(location, directory)
+        shutil.copy(location.replace('\\','/'), directory)
 
-location = 'C:\\Users\\nexB\\Documents\\new_downloads\\yum-3.2.0'
+def get_100_chars(loc):
+    all_lines = []
+    with open(loc,'rb') as txt_file:
+        for line in txt_file:
+            all_lines.append(line.strip('/n'))
+    txt = ''.join(all_lines)
+    for key in lic_keys:
+        try:
+            print txt[txt.index(key)-200:txt.index(key)+200]
+            print loc
+            print '============================================================='
+            break
+        except:
+            pass
 
-
-# data_jsons = combine_data_json.get_data_json('C:\\Users\\nexB\\Desktop\\tempo\\doc')
-#
-# all_locs = []
-# for data_json in data_jsons:
-#     all_locs = all_locs + get_json_data(data_json)
-# all_locs = get_abs_paths(all_locs)
-#
-# output = get_abs_paths(get_results(location))
-#
-# replaced_outputs = []
-# for value in output:
-#     replaced_outputs.append(value.replace('C:\\Users\\nexB\\Desktop\\tempo\\doc', 'C:\\doc'))
-#
-# print len(replaced_outputs)
-# set_output = set(replaced_outputs)
-# set_all_locs = set(all_locs)
-# result = []
-# for value in set_all_locs:
-#     if value in set_output:
-#         result.append(value)
-# results = []
-# for value in result:
-#     results.append(value.replace('C:\\doc', 'C:\\Users\\nexB\\Desktop\\tempo\\doc'))
-#
-# copy_filesto_directory(results, 'C:\\doc\\delete1')
-for value in get_results(location):
-    print value
+ 
+locations = get_all_files_in_directory('/home/rakesh/Downloads/bower-master')
+print '========================'
+for loc in locations:
+    if loc.endswith('.json'):
+        print loc
