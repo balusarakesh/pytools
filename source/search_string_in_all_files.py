@@ -28,8 +28,8 @@ def get_all_files_in_directory(directory):
     else:
         print 'folder not found'
 
-lic_keys = ['(c)','copyright','license','distribute','distribution','proprietary']
-# lic_keys = ['commons-pool2']
+lic_keys = ['license','distribute','distribution','proprietary','copyright']
+# lic_keys = ['Index(']
 def search_str_in_all_files(folder_loc):
     import re
     result_files = []
@@ -40,11 +40,7 @@ def search_str_in_all_files(folder_loc):
                 lines = lines + line
             for key in lic_keys:
                 try:
-#                     lines = lines.replace('\n', '')
-#                     if len(re.findall(r'copyright.{2,100}imperva', lines.lower()))>0 or len(re.findall(r'\(c\).{2,100}imperva', lines.lower()))>0:
-#                         result_files.append(file)
-#                         break
-                    if lines.lower().find(key) >= 0:
+                    if lines.lower().find(key.lower()) >= 0:
                         result_files.append(file)
                         break
                 except:
@@ -58,7 +54,7 @@ def search_str_in_all_files(folder_loc):
         except:
             pass
     return fin_output
-search_patterns = [r'.{0,150}xmlparserapis-2.6.2.jar']
+search_patterns = [r'http://.{0,150}.xpi']
 def search_pattern_in_all_files(folder_loc):
     import re
     result_files = []
@@ -74,7 +70,6 @@ def search_pattern_in_all_files(folder_loc):
                         for value in re.findall(key, lines.lower()):
                             print value
                         result_files.append(file)
-                        break
                 except:
                     pass
                 
@@ -122,13 +117,14 @@ def copy_filesto_directory(locations, directory):
 
 def get_100_chars(loc):
     all_lines = []
+    loc = loc.replace('\\','/')
     with open(loc,'rb') as txt_file:
         for line in txt_file:
             all_lines.append(line.strip('/n'))
     txt = ''.join(all_lines)
     for key in lic_keys:
         try:
-            print txt[txt.index(key)-200:txt.index(key)+200]
+            print txt[txt.index(key)-200:txt.index(key)+300]
             print loc
             print '============================================================='
             break
@@ -136,8 +132,8 @@ def get_100_chars(loc):
             pass
 
  
-locations = get_all_files_in_directory('/home/rakesh/Downloads/bower-master')
+locations = search_pattern_in_all_files('/home/rakesh/Documents/tempr/mozilla/tempr')
 print '========================'
 for loc in locations:
-    if loc.endswith('.json'):
-        print loc
+#     get_100_chars(loc)
+    pass
