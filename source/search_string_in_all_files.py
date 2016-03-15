@@ -2,21 +2,24 @@ import os
 import json
 import shutil
 import requests
+
+
 def save_file_from_url(url, file_path):
-     """
+    """
    Downloads a file using the given url to a specific location(file_path).
    If the file_path is invalid then a temp_file 
         is created and its path is returned.
    """
 
-     if os.path.exists(file_path.replace(os.path.basename(file_path), '')):
-         with open(file_path, 'wb') as file_writer:
-             r = requests.get(url, stream=True)
-             for block in r.iter_content(1024, decode_unicode=False):
-                 file_writer.write(block)
-         return file_path
-     else:             
-         print "invalid file location"
+    if os.path.exists(file_path.replace(os.path.basename(file_path), '')):
+        with open(file_path, 'wb') as file_writer:
+            r = requests.get(url, stream=True)
+            for block in r.iter_content(1024, decode_unicode=False):
+                file_writer.write(block)
+            return file_path
+    else:
+        print "invalid file location"
+
 
 def get_all_files_in_directory(directory):
     if os.path.exists(directory):
@@ -28,8 +31,8 @@ def get_all_files_in_directory(directory):
     else:
         print 'folder not found'
 
-lic_keys = ['license','distribute','distribution','proprietary','copyright']
-# lic_keys = ['Index(']
+# lic_keys = ['license','distribute','distribution','proprietary','copyright']
+lic_keys = ['1865']
 def search_str_in_all_files(folder_loc):
     import re
     result_files = []
@@ -131,9 +134,9 @@ def get_100_chars(loc):
         except:
             pass
 
- 
-locations = search_pattern_in_all_files('/home/rakesh/Documents/tempr/mozilla/tempr')
+#  
+locations = get_all_files_in_directory('/home/rakesh/Documents/tempr/assign/venv.zip-extract')
 print '========================'
 for loc in locations:
-#     get_100_chars(loc)
-    pass
+    if 'manage.py' in loc:
+        print loc

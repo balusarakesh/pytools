@@ -66,7 +66,7 @@ def copy_filesto_directory(locations, directory):
     for location in locations:
         shutil.copy(location, directory)
 
-location = 'C:\\doc\\delete2'
+location = 'C:\\doc\\multiprocessing_test'
 
 
 data_jsons = combine_data_json.get_data_json('C:\\doc\\temp_scan1')

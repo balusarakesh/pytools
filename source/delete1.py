@@ -1,122 +1,16 @@
-urls = [
-        'http://afview.googlecode.com/files/afview_0.1.xpi',
-'http://afview.googlecode.com/files/afview_0.2.1.xpi',
-'http://afview.googlecode.com/files/afview_0.2.2.xpi',
-'http://afview.googlecode.com/files/afview_0.2.3.xpi',
-'http://afview.googlecode.com/files/afview_0.2.xpi',
-'http://ainspector.googlecode.com/files/ainspector-0.80.xpi',
-'http://ainspector.googlecode.com/files/ainspector-0.90.xpi',
-'http://ainspector.googlecode.com/files/ainspector-0.91.xpi',
-'http://ainspector.googlecode.com/files/ainspector-0.92.xpi',
-'http://ainspector.googlecode.com/files/ainspector-0.93.xpi',
-'http://ainspector.googlecode.com/files/ainspector-1.0.xpi',
-'http://archivefacebook.googlecode.com/files/archivefacebook-1.1.xpi',
-'http://auto-login-extension.googlecode.com/files/auto-login-extension-0.0.2.xpi',
-'http://auto-login-extension.googlecode.com/files/auto-login-extension-0.0.3.xpi',
-'http://auto-login-extension.googlecode.com/files/auto-login-extension-0.1.1.xpi',
-'http://auto-login-extension.googlecode.com/files/auto-login-extension-0.1.xpi',
-'http://automatic-save-folder.googlecode.com/files/automatic_save_folder-0.9.3.xpi',
-'http://automatic-save-folder.googlecode.com/files/automatic_save_folder-1.0.0.xpi',
-'http://automatic-save-folder.googlecode.com/files/automatic_save_folder-1.0.1.xpi',
-'http://autoproxy.googlecode.com/files/autoproxy-0.1.0beta.xpi',
-'http://autoproxy.googlecode.com/files/autoproxy-0.1.1.xpi',
-'http://autoproxy.googlecode.com/files/autoproxy-0.4b1.0%2b.2011031708.xpi',
-'http://autoproxy.googlecode.com/files/autoproxy-0.4b1.0%2b.2011032121.xpi',
-'http://autoproxy.googlecode.com/files/autoproxy-0.4b1.0%2b.2011032419.xpi',
-'http://awplus.googlecode.com/files/awplus-1.5.0.xpi',
-'http://awplus.googlecode.com/files/awplus-2.0.0.xpi',
-'http://awplus.googlecode.com/files/awplus-2.1.0.xpi',
-'http://awplus.googlecode.com/files/awplus-3.0b1.xpi',
-'http://awplus.googlecode.com/files/awplus-3.0b2.xpi',
-'http://awplus.googlecode.com/files/awplus-3.0b3.xpi',
-'http://awplus.googlecode.com/files/awplus-3.0.xpi',
-'http://awplus.googlecode.com/files/awplus-3.1.xpi',
-'http://basecampplus.googlecode.com/files/basecamp_plus-0.0.1-fx.xpi',
-'http://batch-images-downloader.googlecode.com/files/batch_images_downloader-0.1.0-fx.xpi',
-'http://batch-images-downloader.googlecode.com/files/batch_images_downloader-0.2.0-fx.xpi',
-'http://batch-images-downloader.googlecode.com/files/batch_images_downloader-0.3.0-fx.xpi',
-'http://batch-images-downloader.googlecode.com/files/batch_images_downloader-0.4.0-fx.xpi',
-'http://batch-images-downloader.googlecode.com/files/batch_images_downloader-0.5.0-fx.xpi',
-'http://master.dl.sourceforge.net/project/benefit/oldfiles/benefit-0.91beta_firefox.xpi',
-'http://blipbalm.googlecode.com/files/blipbalm-firefox-1.0.0.xpi',
-'http://blogscrobbler.googlecode.com/files/blogscrobbler-1.0.1.xpi',
-'http://cachestatus.googlecode.com/files/cachestatus_0.7.10.xpi',
-'http://cachestatus.googlecode.com/files/cachestatus_0.7.5.xpi',
-'http://cachestatus.googlecode.com/files/cachestatus_0.7.6.xpi',
-'http://cachestatus.googlecode.com/files/cachestatus_0.7.7.xpi',
-'http://cachestatus.googlecode.com/files/cachestatus_0.7.8.xpi',
-'http://cachestatus.googlecode.com/files/cachestatus_0.7.9.xpi',
-'http://chevereto.googlecode.com/files/chevereto_right-click_2.0.xpi',
-'http://clicknlearn.googlecode.com/files/clicknlearn-1.0.1-fx.xpi',
-'http://codegoo.googlecode.com/files/codegoo-0.2.1-dev.xpi',
-'http://codegoo.googlecode.com/files/codegoo-0.2.2.xpi',
-'http://codegoo.googlecode.com/files/codegoo-0.2-dev.xpi',
-'http://codegoo.googlecode.com/files/codegoo-0.3-rc1.xpi',
-'http://codegoo.googlecode.com/files/codegoo-0.3.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.1.5.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.2.1.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.2.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.3.1.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.3.2b.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.3.5.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.3.6b.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.3.6.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.3.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4.1b1.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4.1.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4.2.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4a18.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4a1.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4a2.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4a3.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4a4.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4a5.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4a6.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4a7.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4a8.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4a9.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4b1.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4b2.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4b3.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4b4.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4b5.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.4.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.5.159.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.5.163.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.5.164.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.5.169.xpi',
-'http://colorediffs.googlecode.com/files/colorediffs-0.5.171.xpi',
-'http://confirm-address.googlecode.com/files/confirm-address-1.2.5-tb.xpi',
-'http://confirm-address.googlecode.com/files/confirm-address_1.2.6-tb.xpi',
-'http://confirm-address.googlecode.com/files/confirm-address_1.2.7a-tb.xpi',
-'http://confirm-address.googlecode.com/files/confirm-address_1.2.7-tb.xpi',
-'http://confirm-address.googlecode.com/files/confirm-address_1.2.8-tb.xpi',
-'http://connexions.googlecode.com/files/connexions-2.0.0.xpi',
-'http://crunchtime.googlecode.com/files/crunchtime-0.0.5.xpi',
-'http://crunchtime.googlecode.com/files/crunchtime-0.1.4.xpi',
-'http://crunchtime.googlecode.com/files/crunchtime-0.1.5.xpi',
-'http://crunchtime.googlecode.com/files/crunchtime-0.1.6.xpi',
-'http://cryptobird.googlecode.com/files/cryptobird0.1b.xpi',
-'http://dailydilbert.googlecode.com/files/daily_dilbert.2.1.2.xpi',
-'http://dailydilbert.googlecode.com/files/daily_dilbert.2.2.xpi'
+import rdflib
+from rdflib import BNode
+from rdflib import Literal
+def get_mozilla_package(rdf_file):
+    graph = rdflib.Graph()
+    graph.parse(rdf_file)
+    triplets = []
+    val = 'rak'
+    for subject, predicate, object in graph:
         
-        ]
-import os
-import requests
-def save_file_from_url(url, file_path):
-     """
-   Downloads a file using the given url to a specific location(file_path).
-   If the file_path is invalid then a temp_file 
-        is created and its path is returned.
-   """
-
-     if os.path.exists(file_path.replace(os.path.basename(file_path), '')):
-         with open(file_path, 'wb') as file_writer:
-             r = requests.get(url, stream=True)
-             for block in r.iter_content(1024, decode_unicode=False):
-                 file_writer.write(block)
-         return file_path
-     else:             
-         print "invalid file location"
-for url in urls:
-    save_file_from_url(url, '/home/rakesh/Documents/tempr/mozilla/tempr/'+url.split('/')[-1])
+#         if u'N916980c7bb924a20ba919426268b45f2' in unicode(triplet[0].n3()):
+        if unicode(subject) == 'urn:mozilla:install-manifest':
+            print unicode(subject) + ' : '  + predicate + ' : ' + object.toPython()
+        else:
+            print type(subject).__name__
+get_mozilla_package('/home/rakesh/Documents/tempr/test/bountysource-0.0.14-fx.xpi-extract/install.rdf')

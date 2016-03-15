@@ -27,9 +27,9 @@ def get_status(input):
     '''
     try:
         if get_validity(input):
-            r = requests.head(input.strip(),verify = False )
+            r = requests.head(input,verify = False )
             if r.status_code in [404, 500, 501, 502, 503, 504, 405, 408, 410]:
-                return 'not-working'
+                return r.status_code
             else:
                 return 'working'
         else:

@@ -93,4 +93,4 @@ results = []
 for value in result:
     results.append(value.replace('C:\\doc', 'C:\\Users\\nexB\\Desktop\\tempo\\doc'))
 
-copy_filesto_directory(results, 'C:\\doc\\delete2')
+copy_filesto_directory(results, 'C:\\doc\\multiprocessing_test')
