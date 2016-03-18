@@ -32,7 +32,7 @@ def get_json_url(package_name):
     return url.replace('package_name/', package_name)
 
 
-def get_all_pkg_vers_urls(url):
+def collect_download_urls(url):
     html_data = requests.get(url).content
     soup = BeautifulSoup(html_data, 'lxml')
     sub_urls = []
@@ -59,4 +59,4 @@ def append_nuget_parent(sub_url):
 
 for sub_url in all_sub_urls:
     pkg_url = append_nuget_parent(sub_url)
-    get_all_pkg_vers_urls(pkg_url)
+    collect_download_urls(pkg_url)

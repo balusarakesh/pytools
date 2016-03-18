@@ -3,7 +3,6 @@ import json
 import shutil
 import requests
 
-
 def save_file_from_url(url, file_path):
     """
    Downloads a file using the given url to a specific location(file_path).
@@ -32,7 +31,22 @@ def get_all_files_in_directory(directory):
         print 'folder not found'
 
 # lic_keys = ['license','distribute','distribution','proprietary','copyright']
-lic_keys = ['1865']
+lic_keys = [' license ','license:','distribute','distribution','proprietary']
+def search_keys_in_file(location):
+    result_files = []
+    with open(location, 'rb') as file_reader:
+        lines = ''
+        for line in file_reader:
+            lines = lines + line
+        for key in lic_keys:
+            try:
+                if lines.lower().find(key.lower()) >= 0:
+                    result_files.append(file)
+                    return True
+            except:
+                pass
+    return False
+
 def search_str_in_all_files(folder_loc):
     import re
     result_files = []
@@ -135,8 +149,8 @@ def get_100_chars(loc):
             pass
 
 #  
-locations = get_all_files_in_directory('/home/rakesh/Documents/tempr/assign/venv.zip-extract')
-print '========================'
-for loc in locations:
-    if 'manage.py' in loc:
-        print loc
+# locations = get_all_files_in_directory('/home/rakesh/git/scancode-222-nuget-analyzer')
+# print '========================'
+# for loc in locations:
+#     if 'maven.py' in loc:
+#         print loc

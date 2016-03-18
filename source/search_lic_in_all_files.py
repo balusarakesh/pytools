@@ -2,6 +2,8 @@ import os
 import json
 import combine_data_json
 import shutil
+from search_string_in_all_files import search_str_in_all_files,\
+    search_keys_in_file
 
 def get_results(folder_loc):
     keys = ['copyright', '(c)']
@@ -44,7 +46,7 @@ def get_json_data(location):
     json_dump = json.dumps(data)
     json_data = json.loads(json_dump)
     for value in json.loads(json_data):
-        if value['copyrights'] == []:
+        if value['licenses'] == []:
             locations.append(value['location'])
     fin_locs = []
     for file_loc in locations:
@@ -54,6 +56,27 @@ def get_json_data(location):
         except:
             pass
     return fin_locs
+
+def get_scores(location):
+    with open(location, 'rb') as json_file:
+        data = ''
+        for line in json_file:
+            data = data + line
+    data = data.replace('data=', '')
+    locations = []
+    json_dump = json.dumps(data)
+    json_data = json.loads(json_dump)
+    for value in json.loads(json_data):
+        if value['licenses'] != []:
+            locations.append(value['licenses'])
+#     fin_locs = []
+#     for file_loc in locations:
+#         try:
+#             file_loc = file_loc.replace('/', '\\')
+#             fin_locs.append(file_loc)
+#         except:
+#             pass
+    return locations
 
 def get_abs_paths(paths):
     output = []
@@ -69,22 +92,12 @@ def copy_filesto_directory(locations, directory):
 location = 'C:\\doc\\multiprocessing_test'
 
 
-data_jsons = combine_data_json.get_data_json('C:\\doc\\temp_scan1')
-
-all_locs = []
-for data_json in data_jsons:
-    all_locs = all_locs + get_json_data(data_json)
-all_locs = get_abs_paths(all_locs)
-
-output = get_abs_paths(get_results(location))
-
-# replaced_outputs = []
-# for value in output:
-#     replaced_outputs.append(value.replace('C:\\Users\\nexB\\Desktop\\tempo\\doc', 'C:\\doc'))
-
-set_output = set(output)
-set_all_locs = set(all_locs)
-result = []
-for value in set_output:
-    if value not in set_all_locs:
-        print value
+data_jsons = combine_data_json.get_data_json('/home/rakesh/Documents/tempr/final_lic/out_files')
+print data_jsons
+output = get_scores(data_jsons[0])
+# print output
+print(len(output))
+for value in output:
+    if value[0]['score'] != 100.0:
+        print value[0]['score']
+                                          
