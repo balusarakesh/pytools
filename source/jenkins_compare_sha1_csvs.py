@@ -25,18 +25,18 @@ def compare_csvs(old_csv, new_csv):
     with open(old_csv, 'rb') as csv_file:
         csv_reader = csv.DictReader(csv_file, delimiter = ',')
         for row in csv_reader:
-            old[row['SHA1SUM']] = row['file_name']
+            old[row['LOCATION']] = row['SHA1SUM']
     with open(new_csv, 'rb') as csv_file:
         csv_reader = csv.DictReader(csv_file, delimiter = ',')
         for row in csv_reader:
-            old[row['SHA1SUM']] = row['file_name']
+            new[row['LOCATION']] = row['SHA1SUM']
     modified_new = []
-    for file_name in new.values():
-        if file_name not in old.values():
-            modified_new.append(file_name)
-        elif get_key_using_value(new, file_name) == get_key_using_value(old, file_name):
-            modified_new.append(file_name)
-    return  modified_new
+    for sha1sum in new.values():
+        if sha1sum not in old.values():
+            modified_new.append(get_key_using_value(new, sha1sum))
+        elif get_key_using_value(new, sha1sum) != get_key_using_value(old, sha1sum):
+            modified_new.append(get_key_using_value(new, sha1sum))
+    return modified_new
 
-for value in compare_csvs('/home/rakesh/Desktop/sha1_data.csv', '/home/rakesh/Desktop/sha1.csv'):
+for value in compare_csvs('/home/rakesh/Desktop/sha1_old.csv', '/home/rakesh/Desktop/sha1_new.csv'):
     print value

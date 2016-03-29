@@ -16,7 +16,7 @@ codebase = '/home/rakesh/Desktop'
 sha1_file = '/home/rakesh/Documents/doc/jenkins_project/sha1_data.csv'
 
 
-def save_codebase(codebase, code_loc):
+def save_codebase(codebase, tmp_sha_loc):
     if not os.path.exists(sha1_file):
         print "Scanning codebase for the first time... Bear with me it'll take a lot of time"
         with open(sha1_file, 'wb') as csv_file:
@@ -24,17 +24,17 @@ def save_codebase(codebase, code_loc):
         save_codebase(codebase, sha1_file)
     all_files = get_all_files_in_directory(codebase)
     for location in all_files:
-        sha1_data[get_sha1sum(location)] = location
-    with open(code_loc, 'wb') as csv_file:
+        sha1_data[location] = get_sha1sum(location)
+    with open(tmp_sha_loc, 'wb') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter = ',')
-        csv_writer.writerow(['SHA1SUM','LOCATION'])
+        csv_writer.writerow(['LOCATION','SHA1SUM'])
         for key, value in sha1_data.iteritems():
             csv_writer.writerow([key, value])
 
 
-def check_codebase_sha(location):
-    save_codebase(codebase, location)
-    if get_sha1sum(sha1_file) != get_sha1sum(location):
+def check_codebase_sha(tmp_sha_loc):
+    save_codebase(codebase, tmp_sha_loc)
+    if get_sha1sum(sha1_file) != get_sha1sum(tmp_sha_loc):
         print 'You have changed something'
         save_codebase(codebase, sha1_file)
     else:

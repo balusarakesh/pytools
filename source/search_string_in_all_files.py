@@ -3,6 +3,7 @@ import json
 import shutil
 import requests
 
+
 def save_file_from_url(url, file_path):
     """
    Downloads a file using the given url to a specific location(file_path).
@@ -30,8 +31,10 @@ def get_all_files_in_directory(directory):
     else:
         print 'folder not found'
 
-# lic_keys = ['license','distribute','distribution','proprietary','copyright']
-lic_keys = [' license ','license:','distribute','distribution','proprietary']
+# lic_keys = ['license', 'distribute', 'distribution', 'proprietary', 'copyright']
+lic_keys = [' license ', 'license:', 'distribute', 'distribution', 'proprietary']
+
+
 def search_keys_in_file(location):
     result_files = []
     with open(location, 'rb') as file_reader:
@@ -47,8 +50,8 @@ def search_keys_in_file(location):
                 pass
     return False
 
-def search_str_in_all_files(folder_loc):
-    import re
+
+def search_str_in_all_files(folder_loc, lic_keys=lic_keys, caps_check=False):
     result_files = []
     for file in get_all_files_in_directory(folder_loc):
         with open(file, 'rb') as file_reader:
@@ -57,21 +60,21 @@ def search_str_in_all_files(folder_loc):
                 lines = lines + line
             for key in lic_keys:
                 try:
-                    if lines.lower().find(key.lower()) >= 0:
-                        result_files.append(file)
-                        break
+                    if not caps_check:
+                        if lines.lower().find(key.lower()) >= 0:
+                            result_files.append(file)
+                            break
+                    else:
+                        if lines.find(key) >= 0:
+                            result_files.append(file)
+                            break
                 except:
                     pass
-                
-    fin_output = []
-    for value in result_files:
-        try:
-            value = value.replace('/','\\')
-            fin_output.append(value)
-        except:
-            pass
-    return fin_output
-search_patterns = [r'http://.{0,150}.xpi']
+
+    return result_files
+search_patterns = ['pkgid=".+?"']
+
+
 def search_pattern_in_all_files(folder_loc):
     import re
     result_files = []
@@ -83,17 +86,17 @@ def search_pattern_in_all_files(folder_loc):
             for key in search_patterns:
                 try:
                     lines = lines.replace('\n', '')
-                    if len(re.findall(key, lines.lower()))>0:
+                    if len(re.findall(key, lines.lower())) > 0:
                         for value in re.findall(key, lines.lower()):
                             print value
                         result_files.append(file)
                 except:
                     pass
-                
+
     fin_output = []
     for value in result_files:
         try:
-            value = value.replace('/','\\')
+            value = value.replace('/', '\\')
             fin_output.append(value)
         except:
             pass
@@ -121,6 +124,7 @@ def get_json_data(location):
             pass
     return fin_locs
 
+
 def get_abs_paths(paths):
     output = []
     for path in paths:
@@ -128,14 +132,16 @@ def get_abs_paths(paths):
             output.append(os.path.abspath(path))
     return output
 
+
 def copy_filesto_directory(locations, directory):
     for location in locations:
-        shutil.copy(location.replace('\\','/'), directory)
+        shutil.copy(location.replace('\\', '/'), directory)
+
 
 def get_100_chars(loc):
     all_lines = []
-    loc = loc.replace('\\','/')
-    with open(loc,'rb') as txt_file:
+    loc = loc.replace('\\', '/')
+    with open(loc, 'rb') as txt_file:
         for line in txt_file:
             all_lines.append(line.strip('/n'))
     txt = ''.join(all_lines)
@@ -148,9 +154,4 @@ def get_100_chars(loc):
         except:
             pass
 
-#  
-# locations = get_all_files_in_directory('/home/rakesh/git/scancode-222-nuget-analyzer')
-# print '========================'
-# for loc in locations:
-#     if 'maven.py' in loc:
-#         print loc
+locations = search_pattern_in_all_files('/home/rakesh/Documents/tempr/test2/')
