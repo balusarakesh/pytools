@@ -154,4 +154,4 @@ def get_100_chars(loc):
         except:
             pass
 
-locations = search_pattern_in_all_files('/home/rakesh/Documents/tempr/test2/')
+# locations = search_pattern_in_all_files('/home/rakesh/Documents/tempr/test2/')
