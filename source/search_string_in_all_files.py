@@ -51,14 +51,14 @@ def search_keys_in_file(location):
     return False
 
 
-def search_str_in_all_files(folder_loc, lic_keys=lic_keys, caps_check=False):
+def search_str_in_all_files(folder_loc, keys=lic_keys, caps_check=False):
     result_files = []
     for file in get_all_files_in_directory(folder_loc):
         with open(file, 'rb') as file_reader:
             lines = ''
             for line in file_reader:
                 lines = lines + line
-            for key in lic_keys:
+            for key in keys:
                 try:
                     if not caps_check:
                         if lines.lower().find(key.lower()) >= 0:
@@ -75,19 +75,20 @@ def search_str_in_all_files(folder_loc, lic_keys=lic_keys, caps_check=False):
 search_patterns = ['pkgid=".+?"']
 
 
-def search_pattern_in_all_files(folder_loc):
+def search_pattern_in_all_files(folder_loc, patterns=search_patterns):
     import re
     result_files = []
-    for file in get_all_files_in_directory(folder_loc):
-        with open(file, 'rb') as file_reader:
+    for file_name in get_all_files_in_directory(folder_loc):
+        with open(file_name, 'rb') as file_reader:
             lines = ''
             for line in file_reader:
                 lines = lines + line
-            for key in search_patterns:
+            for key in patterns:
+                print key
                 try:
-                    lines = lines.replace('\n', '')
-                    if len(re.findall(key, lines.lower())) > 0:
-                        for value in re.findall(key, lines.lower()):
+                    out = len(re.findall(key, lines))
+                    if len(out)>0:
+                        for value in out:
                             print value
                         result_files.append(file)
                 except:
@@ -138,16 +139,16 @@ def copy_filesto_directory(locations, directory):
         shutil.copy(location.replace('\\', '/'), directory)
 
 
-def get_100_chars(loc):
+def get_100_chars(loc, keys=lic_keys):
     all_lines = []
     loc = loc.replace('\\', '/')
     with open(loc, 'rb') as txt_file:
         for line in txt_file:
             all_lines.append(line.strip('/n'))
     txt = ''.join(all_lines)
-    for key in lic_keys:
+    for key in keys:
         try:
-            print txt[txt.index(key)-200:txt.index(key)+300]
+            print txt[txt.lower().index(key.lower())-200:txt.lower().index(key.lower())+300]
             print loc
             print '============================================================='
             break
