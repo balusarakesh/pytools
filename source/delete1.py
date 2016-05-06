@@ -1,19 +1,17 @@
-import hashlib
 import json
-import commands
 import subprocess
 import os
-import time
-import tempfile
+import re
 
-
-emulatorList = [
+requests = [
         {
+         'url' : 'https://s3.amazonaws.com/scanapprakesh/test.txt',
          'location' : '/home/rakesh/Desktop/test.txt',
          'email' : 'rake@nexb.com',
          'status' : 'NOT STARTED'
          },
         {
+         'url' : 'https://s3.amazonaws.com/scanapprakesh/test1.txt',
          'location' : '/home/rakesh/Desktop/test1.txt',
          'email' : 'rakes@nexb.com',
          'status' : 'NOT STARTED'
@@ -21,29 +19,33 @@ emulatorList = [
         ]
 
 
-def scan_in_sub_process(infos):
-        location = infos['location']
-        file_loc = os.path.dirname(location)
-        full_name = location.replace(file_loc, '')
-        no_ext = full_name.split('.')[-2]
-        if no_ext.startswith('/'):
-            no_ext = no_ext[1:]
-        html_loc = os.path.join(file_loc, no_ext + '.html')
-        process = subprocess.Popen("/home/rakesh/Documents/tempr/scan_app/scancode-toolkit-1.6.1/scancode --format=html-app --license "+location + " " + html_loc, stdout=subprocess.PIPE, shell=True)
-        out, err = process.communicate()
-        print out
-        if err:
-            infos['status'] = 'ERROR'
-        else:
-            infos['status'] = 'FINISHED'
-        print 'sub processes started'
+def get_char_from_email(email):
+    if email:
+        return ''.join(re.findall('[a-zA-Z]*', email))
 
 
-if len(emulatorList) > 0:
-    for infos in emulatorList:
-        if infos['status'] == 'NOT STARTED':
-            temp_file = '/tmp/' + infos['email']
-            with open(temp_file, 'wb') as json_file:
-                json.dump(infos, json_file)
-            subprocess.Popen('python /home/rakesh/git/pytools/source/delete2.py ' + temp_file, stdout=subprocess.PIPE, shell=True)
+def create_temp_directory(dirname):
+    try:
+        if dirname[0] == '/':
+            dirname = dirname[1:]
+        location = os.path.join('/tmp/', dirname)
+        if not os.path.exists(location):
+            os.mkdir(location)
+        return location
+    except Exception, e:
+        print str(e)
 
+
+def run_scan_app(requests):
+    if len(requests) > 0:
+        for infos in requests:
+            if infos['status'] == 'NOT STARTED':
+                only_chars = get_char_from_email(infos['email'])
+                temp_dir = create_temp_directory(only_chars)
+                request_file = os.path.join(temp_dir, only_chars+'.json')
+                infos['working_dir'] = temp_dir
+                with open(request_file, 'wb') as json_file:
+                    json.dump(infos, json_file)
+                subprocess.Popen('python /home/rakesh/git/pytools/source/delete2.py ' + request_file, stdout=subprocess.PIPE, shell=True)
+
+run_scan_app(requests)
